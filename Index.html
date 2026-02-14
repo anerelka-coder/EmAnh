@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Question</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: #ffe6e6;
+    font-family: sans-serif;
+    overflow: hidden;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+
+h1 {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #d6006e;
+    font-size: 26px;
+    margin: 0;
+    text-align: center;
+    width: 100%;
+    pointer-events: none;
+}
+
+button {
+    position: absolute;
+    padding: 15px 35px;
+    font-size: 20px;
+    border-radius: 15px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#yes {
+    background: #ff4d4d;
+    color: white;
+    left: 50%;
+    top: 55%;
+    transform: translate(-50%, -50%);
+}
+
+#no {
+    background: #888;
+    color: white;
+}
+</style>
+</head>
+
+<body>
+<div class="container" id="box">
+    <h1>Em, will you be my Valentine? ❤️</h1>
+
+    <button id="yes"
+        onclick="showLove()">
+        YES
+    </button>
+
+    <button id="no" onmouseover="moveBtn()" ontouchstart="moveBtn()">NO</button>
+</div>
+
+<script>
+const box = document.getElementById('box');
+const noBtn = document.getElementById('no');
+const yesBtn = document.getElementById('yes');
+
+/* Romantic message after clicking YES */
+function showLove() {
+    document.body.innerHTML = `
+        <div style="
+            height:100vh;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:center;
+            background:#ffe6e6;
+            text-align:center;
+            padding:20px;
+        ">
+            <h1 style="color:#d6006e;font-size:32px;">
+                You just made me the happiest man alive ❤️
+            </h1>
+            <p style="font-size:20px;color:#444;max-width:500px;">
+                Anh yêu em very much too🌹
+            </p>
+        </div>
+    `;
+}
+
+/* Initial placement — NO next to YES */
+function placeNextToYes() {
+    const yesRect = yesBtn.getBoundingClientRect();
+    const boxRect = box.getBoundingClientRect();
+
+    const gap = 15;
+
+    const x = yesRect.right - boxRect.left + gap;
+    const y = yesRect.top - boxRect.top;
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+}
+
+/* Escape logic */
+function moveBtn() {
+    const margin = 10;
+    const safeGap = 25;
+
+    const boxRect = box.getBoundingClientRect();
+    const yesRect = yesBtn.getBoundingClientRect();
+
+    const btnW = noBtn.offsetWidth;
+    const btnH = noBtn.offsetHeight;
+
+    let placed = false;
+    let tries = 0;
+
+    while (!placed && tries < 200) {
+        tries++;
+
+        const x = margin + Math.random() * (boxRect.width - btnW - margin * 2);
+        const y = margin + Math.random() * (boxRect.height - btnH - margin * 2);
+
+        noBtn.style.left = x + "px";
+        noBtn.style.top = y + "px";
+
+        const noRect = noBtn.getBoundingClientRect();
+
+        const overlap = !(
+            noRect.right + safeGap < yesRect.left ||
+            noRect.left - safeGap > yesRect.right ||
+            noRect.bottom + safeGap < yesRect.top ||
+            noRect.top - safeGap > yesRect.bottom
+        );
+
+        if (!overlap) placed = true;
+    }
+}
+
+/* Start */
+window.addEventListener("DOMContentLoaded", placeNextToYes);
+
+/* Fix after screen rotation */
+window.addEventListener("resize", placeNextToYes);
+</script>
+</body>
+</html>
