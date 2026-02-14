@@ -78,8 +78,7 @@ function showLove() {
         <div class="teddy">🧸</div>
         <h1>You just made me the happiest man alive ❤️</h1>
         <p>
-            Anh yêu em very much too 🌹<br>
-            
+            Anh yêu em very much too 🌹
         </p>
         <div class="hearts">
             <span>❤️</span>
@@ -101,17 +100,26 @@ function showLove() {
         text-align: center;
         padding: 20px;
         overflow: hidden;
-        animation: fadeIn 1s ease;
         font-family: sans-serif;
     }
 
-    .love-screen h1 { font-size: 32px; color:#d6006e; animation: pop 0.8s ease; }
-    .love-screen p { font-size:20px; color:#444; max-width:500px; animation: fadeIn 2s ease; }
+    .love-screen h1 { 
+        font-size: 32px; 
+        color:#d6006e; 
+        animation: none; /* tekst nie animuje się */ 
+    }
+
+    .love-screen p { 
+        font-size:20px; 
+        color:#444; 
+        max-width:500px; 
+        animation: fadeIn 1s ease; 
+    }
 
     .teddy {
         font-size: 80px;
         margin-bottom: 20px;
-        animation: bounce 1.2s infinite alternate ease-in-out;
+        animation: bounce 1.2s infinite alternate ease-in-out; /* tylko pluszak skacze */
     }
 
     .hearts span {
@@ -129,7 +137,6 @@ function showLove() {
     @keyframes bounce { from { transform: translateY(0) scale(1); } to { transform: translateY(-25px) scale(1.05); } }
     @keyframes float { from { transform: translateY(100vh); opacity: 0; } 20% { opacity: 1; } to { transform: translateY(-10vh); opacity: 0; } }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes pop { 0% { transform: scale(0.6); } 70% { transform: scale(1.1); } 100% { transform: scale(1); } }
     </style>
     `;
 }
