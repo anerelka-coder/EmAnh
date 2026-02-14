@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Question</title>
+<title>Valentine</title>
 
 <style>
 body {
@@ -62,11 +62,7 @@ button {
 <div class="container" id="box">
     <h1>Em, will you be my Valentine? ❤️</h1>
 
-    <button id="yes"
-        onclick="showLove()">
-        YES
-    </button>
-
+    <button id="yes" onclick="showLove()">YES</button>
     <button id="no" onmouseover="moveBtn()" ontouchstart="moveBtn()">NO</button>
 </div>
 
@@ -75,26 +71,66 @@ const box = document.getElementById('box');
 const noBtn = document.getElementById('no');
 const yesBtn = document.getElementById('yes');
 
-/* Romantic message after clicking YES */
+/* Romantic message with animations after clicking YES */
 function showLove() {
     document.body.innerHTML = `
-        <div style="
-            height:100vh;
-            display:flex;
-            flex-direction:column;
-            align-items:center;
-            justify-content:center;
-            background:#ffe6e6;
-            text-align:center;
-            padding:20px;
-        ">
-            <h1 style="color:#d6006e;font-size:32px;">
-                You just made me the happiest man alive ❤️
-            </h1>
-            <p style="font-size:20px;color:#444;max-width:500px;">
-                Anh yêu em very much too🌹
-            </p>
+    <div class="love-screen">
+        <div class="teddy">🧸</div>
+        <h1>You just made me the happiest man alive ❤️</h1>
+        <p>
+            Anh yêu em very much too 🌹<br>
+            From now on, every Valentine’s Day belongs to us.
+        </p>
+        <div class="hearts">
+            <span>❤️</span>
+            <span>💖</span>
+            <span>❤️</span>
+            <span>💗</span>
+            <span>❤️</span>
         </div>
+    </div>
+
+    <style>
+    .love-screen {
+        height: 100vh;
+        background: #ffe6e6;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 20px;
+        overflow: hidden;
+        animation: fadeIn 1s ease;
+        font-family: sans-serif;
+    }
+
+    .love-screen h1 { font-size: 32px; color:#d6006e; animation: pop 0.8s ease; }
+    .love-screen p { font-size:20px; color:#444; max-width:500px; animation: fadeIn 2s ease; }
+
+    .teddy {
+        font-size: 80px;
+        margin-bottom: 20px;
+        animation: bounce 1.2s infinite alternate ease-in-out;
+    }
+
+    .hearts span {
+        position: absolute;
+        font-size: 24px;
+        animation: float 6s linear infinite;
+        opacity: 0.7;
+    }
+    .hearts span:nth-child(1) { left: 10%; animation-delay: 0s; }
+    .hearts span:nth-child(2) { left: 30%; animation-delay: 1s; }
+    .hearts span:nth-child(3) { left: 50%; animation-delay: 2s; }
+    .hearts span:nth-child(4) { left: 70%; animation-delay: 3s; }
+    .hearts span:nth-child(5) { left: 90%; animation-delay: 4s; }
+
+    @keyframes bounce { from { transform: translateY(0) scale(1); } to { transform: translateY(-25px) scale(1.05); } }
+    @keyframes float { from { transform: translateY(100vh); opacity: 0; } 20% { opacity: 1; } to { transform: translateY(-10vh); opacity: 0; } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes pop { 0% { transform: scale(0.6); } 70% { transform: scale(1.1); } 100% { transform: scale(1); } }
+    </style>
     `;
 }
 
@@ -104,7 +140,6 @@ function placeNextToYes() {
     const boxRect = box.getBoundingClientRect();
 
     const gap = 15;
-
     const x = yesRect.right - boxRect.left + gap;
     const y = yesRect.top - boxRect.top;
 
@@ -112,7 +147,7 @@ function placeNextToYes() {
     noBtn.style.top = y + "px";
 }
 
-/* Escape logic */
+/* Escape logic for NO button */
 function moveBtn() {
     const margin = 10;
     const safeGap = 25;
@@ -150,8 +185,6 @@ function moveBtn() {
 
 /* Start */
 window.addEventListener("DOMContentLoaded", placeNextToYes);
-
-/* Fix after screen rotation */
 window.addEventListener("resize", placeNextToYes);
 </script>
 </body>
